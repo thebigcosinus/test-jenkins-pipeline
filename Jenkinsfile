@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent any
+    agent {
+        docker {image 'node:7-alpine'}
+    }
 
     environment {
         language = 'PHP'
@@ -50,9 +52,7 @@ pipeline {
             }
         }
         stage('Docker') {
-            agent {
-                docker {image 'node:7-alpine'}
-            }
+
             steps {
                 sh 'node --version'
             }
