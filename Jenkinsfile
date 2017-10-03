@@ -6,6 +6,10 @@ pipeline {
         language = 'PHP'
     }
 
+    parameters {
+        string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -30,6 +34,19 @@ pipeline {
         stage('Env') {
             steps {
                 sh 'printenv'
+            }
+        }
+        stage('Parameters') {
+            steps {
+                echo  "${params.Greeting}"
+            }
+        }
+        post {
+            always {
+                junit '**/target/*.xml'
+            }
+            failure {
+                mail to: team@example.com, subject: 'The Pipeline failed :('
             }
         }
     }
