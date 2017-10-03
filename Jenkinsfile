@@ -49,5 +49,13 @@ pipeline {
                 mail to: team@example.com, subject: 'The Pipeline failed :('
             }
         }
+        stage('Docker') {
+            agent {
+                docker {image 'node:7-alpine'}
+            }
+            steps {
+                sh 'node --version'
+            }
+        }
     }
 }
